@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.time.LocalDateTime;
 
 @Entity
 @Table
@@ -31,7 +33,9 @@ public class Producto {
     @Positive
     private float precio;
     @Column
-    private String fechaCreacion;
+   
+   @JsonIgnore
+    private final LocalDateTime fechaCreacion = LocalDateTime.now();
 
     public Producto() {
     }
@@ -39,12 +43,12 @@ public class Producto {
     public void producto() {
     }
 
-    public void producto(int id, String nombre, String descripcion, float precio,String fechaCreacion) {
+    public void producto(int id, String nombre, String descripcion, float precio) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
-        this.fechaCreacion = fechaCreacion;
+       
     }
 
     public int getId() {
@@ -79,11 +83,8 @@ public class Producto {
         this.precio = precio;
     }
 
-    public String getFechaCreacion() {
+    public LocalDateTime getFechaCreacion() {
         return this.fechaCreacion;
     }
 
-    public void setFechaCreacion(String fecha) {
-        this.fechaCreacion = fecha;
-    }
 }

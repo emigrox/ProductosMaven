@@ -3,8 +3,12 @@ package com.productos.demo.servicio;
 
 import com.productos.demo.controlador.ProductoNotFoundException;
 import com.productos.demo.modelo.Producto;
+import com.productos.demo.modelo.ProductoDTO;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,13 +20,23 @@ public class ProductoService {
     public ProductoService() {
     }
 
-    public List<Producto> getAllProductos() {
-        List<Producto> productos = new ArrayList();
+
+    public List<ProductoDTO> getAllProductos() {
+        
+        
+        List<ProductoDTO> productosDto = new ArrayList();        
+
         this.productoRepository.findAll().forEach((producto) -> {
-            productos.add(producto);
+
+            
+            productosDto.add(ProductoMapper.INSTANCE.productoToProductoDTO(producto));
         });
-        return productos;
+        return productosDto;
     }
+
+    
+ 
+  
 
     public Producto getProductoById(int id) {
         return (Producto)this.productoRepository.findById(id)
